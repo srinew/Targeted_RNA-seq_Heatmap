@@ -2,7 +2,6 @@ server <- function(input, output) {
   plotInput <- function(){
     inFile <- input$file
     file1 <- read.csv(inFile$datapath, header = T)
-    # file1 <- read.csv("/Users/srnallan/Desktop/Heatmap Shiny/test shiny.csv", header = T)
     mainfile <- as.data.frame(file1[4:nrow(file1), c(1,4:ncol(file1))])
     rownames(mainfile) <- mainfile[,1]
     mainfile <- mainfile[,-1]
