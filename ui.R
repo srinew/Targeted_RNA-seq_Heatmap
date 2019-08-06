@@ -1,5 +1,6 @@
 ui <- fluidPage(
   
+  HTML('<meta name="viewport" content="width=1024">'),
   # Application title
   titlePanel(div(HTML("RNA-Seq Count Normalized Heatmap"))),
   sidebarLayout(
@@ -26,7 +27,24 @@ ui <- fluidPage(
                                       "No"),
                    choiceValues = list("Yes",
                                        "No"),
-                   width = 200), downloadButton("export", label = "download heatmap"),
+                   width = 200),
+      radioButtons("select_class_2",
+                   "Clustering method:",
+                   selected = c("ward.D2"),
+                   choiceNames = list("ward.D2",
+                                      "ward.D",
+                                      "single",
+                                      "complete",
+                                      "average",
+                                      "median"),
+                   choiceValues = list("ward.D2",
+                                       "ward.D",
+                                       "single",
+                                       "complete",
+                                       "average",
+                                       "median"),
+                   width = 200),
+      downloadButton("export", label = "download heatmap"),
       width = 2),
     mainPanel(
       plotOutput("distPlot")
