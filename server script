@@ -2,6 +2,7 @@ server <- function(input, output) {
   plotInput <- function(){
     inFile <- input$file
     file1 <- read.csv(inFile$datapath, header = T)
+    # file1 <- read.csv("/Users/srnallan/Desktop/Heatmap Shiny/test shiny.csv", header = T)
     mainfile <- as.data.frame(file1[4:nrow(file1), c(1,4:ncol(file1))])
     rownames(mainfile) <- mainfile[,1]
     mainfile <- mainfile[,-1]
@@ -113,7 +114,7 @@ server <- function(input, output) {
     colanno[,1] <- factor(colanno[,1])
     colanno[,2] <- factor(colanno[,2])
     
-    colors.hm <- colorRampPalette(c("royalblue4","white","red"))(100)
+    colors.hm <- colorRampPalette(c("blue","white","red"))(100)
     heat.brks <- seq(from=-max(abs(df.x)), to=max(abs(df.x)),length= 101)
     
     # pheatmap(e.med ,color=colors.hm, labels_row = y$genes$Gene,fontsize_row = 5,
@@ -121,7 +122,8 @@ server <- function(input, output) {
     #          annotation_row = rowanno.1)
     
     pheatmap(df.x ,color=colors.hm, breaks=heat.brks, labels_row = y[[3]][,2], main=paste0(input$select_class),fontsize_row = 10,
-             cluster_cols = ifelse(input$select_class_1=="Yes", T, F), annotation_row = rowanno.1, annotation_col = colanno)
+             cluster_cols = ifelse(input$select_class_1=="Yes", T, F), annotation_row = rowanno.1, annotation_col = colanno,
+             clustering_method = input$select_class_2)
                   
   }
 
@@ -140,9 +142,12 @@ server <- function(input, output) {
   },height= 950)
   
   output$export <- downloadHandler(
-    filename = function() { paste(gsub(".csv","",input$file), ' normalized heatmap.pdf', sep='') },
+    filename = function() { paste(gsub(".csv","",input$file), " Clustering- ", input$select_class_2,' normalized heatmap.pdf', sep='') },
     content = function(file) {
       ggsave(file, plot = plotInput(), device = "pdf", width=20,height = 20)
     }
   )
 }
+
+# Run the application 
+shinyApp(ui = ui, server = server)
