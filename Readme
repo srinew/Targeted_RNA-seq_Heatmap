@@ -3,7 +3,7 @@ This shiny app lets you create and download a normalized heatmap by uploading RN
 The app is specific to targeted gene panels which uses housekeeping genes for normalization. 
 Displayed heatmap can be downloaded as PDF.
 
-Link to app: https://svnallan.shinyapps.io/shiny/
+Link to app: https://svnallan.shinyapps.io/heatmaphknorm/
 
 
 The input file should be in .XLSX format.
